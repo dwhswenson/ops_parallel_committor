@@ -116,7 +116,7 @@ class ParallelCommittorSimulation(object):
         if self.output:
             out_storage = paths.Storage(self.output, mode='w')
             out_storage.save(engine)
-            out_storage.save(randomizer)
+            out_storage.tags['randomizer'] = randomizer
             out_storage.save(paths.Trajectory(initial_snapshots))
         task_files = self.write_task_files(initial_snapshots, engine,
                                            randomizer)
@@ -216,7 +216,7 @@ if __name__ == "__main__":
     opts = parser.parse_args()
 
     kwargs = dict(vars(opts))
-    del kwargs['output']
+    # del kwargs['output']
     kwargs['state_names'] = kwargs.pop('state')
     committor_sim = ParallelCommittorSimulation(**kwargs)
 
